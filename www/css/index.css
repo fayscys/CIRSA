@@ -49,15 +49,12 @@ header {
 }
 
 .logo {
-    font-size: 26px;
+    position: absolute;
+    right:  20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: var(--normal-font);
     font-weight: 700;
-    letter-spacing: 1px;
-    margin-left: auto; 
-    position: relative;
-    display: inline-block;
-    color: white;
-    overflow: hidden;
-    animation: distort 3s infinite linear;
 }
 
 .logo span {
@@ -273,7 +270,9 @@ section.active {
 .home-content h2 {
     font-size: var(--big-font);
     font-weight: 700;
-    margin-bottom: 20px;
+    margin-top: -80px;
+    align-self: center;
+    padding-right: 40px;
 }
 
 .home-content p {
@@ -557,6 +556,115 @@ form .categories-list a:hover {
         0 0 20px rgba(18, 247, 255, 0.6);
 }
 
+
+/* incident details*/
+
+.incident-details {
+    border: 2px solid var(--hover-color);
+    background-color: black;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    margin-top: -450px;
+    padding: 30px;
+    height: 400px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.incident-details h3{
+    color: var(--text-color);
+    font-weight: 700;
+    font-size: var(--normal-font);
+    align-self: center;
+}
+
+.incident-details p {
+    color: #fdfdfd;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.incident-details img{
+    width: 50%;
+    height: auto;
+    margin: 20px auto;
+    border: 2px solid white;
+    background-color: black;
+    border-radius: 10px;
+}
+
+.incident-details button {
+    width: 150px;
+    height: 45px;
+    background: black; /* Button background color */
+    color: var(--hover-color); /* Button text color */
+    font-size: 1rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: .6s;
+    box-shadow: var(--neon-box-shadow);
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    border: 2px solid var(--hover-color); /* Button border color */
+    text-align: center;
+    cursor: pointer;
+    margin: 10px 0;
+    right: -5px;
+}
+
+.incident-details button:hover {
+    color: black; 
+    background: var(--hover-color); 
+}
+
+.incident-details button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--hover-color); /* Background color of button when hovered */
+    width: 0;
+    height: 100%;
+    z-index: -1;
+    transition: .4s;
+}
+
+
+.incident-details button:hover {
+    color: black;
+    background: var(--hover-color);
+}
+
+.incident-details button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--hover-color);
+    width: 0;
+    height: 100%;
+    z-index: -1;
+    transition: .4s;
+}
+
+.incident-details button:hover::before {
+    width: 100%;
+}
+
+.text-content {
+    text-align: center;
+}
+
+.text-content p {
+    text-align: left;
+    margin-left: 20px;
+}
+
 /* Notification Section */
 #notification {
     padding: 60px 10%; /* Adjust padding as needed */
@@ -603,14 +711,15 @@ form .categories-list a:hover {
 
 /* Account Section */
 .account {
-    min-height: 100vh;
+   
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 100px 10%;
+    padding: 100px 30%;
     background-color: var(--bg-color); /* Match the background color */
+    
 }
 
 .account-content {
@@ -635,7 +744,7 @@ form .categories-list a:hover {
     margin-bottom: 20px;
 }
 
-.account-content button {
+.account button {
     width: 150px;
     height: 45px;
     background: black; /* Button background color */
@@ -646,15 +755,33 @@ form .categories-list a:hover {
     transition: .6s;
     box-shadow: var(--neon-box-shadow);
     border-radius: 5px;
-    position: absolute;
+    position: relative;
     overflow: hidden;
     z-index: 1;
     border: 2px solid var(--hover-color); /* Button border color */
     text-align: center;
     cursor: pointer;
-    margin: 0 auto;
-    display: block;
+    margin: 10px 0;
+    right: -170px;
 }
+
+.account button:hover {
+    color: black; 
+    background: var(--hover-color); 
+}
+
+.account button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--hover-color); /* Background color of button when hovered */
+    width: 0;
+    height: 100%;
+    z-index: -1;
+    transition: .4s;
+}
+
 
 .account-content button:hover {
     color: black;
@@ -713,6 +840,24 @@ form .categories-list a:hover {
 .form-action span a:hover {
     color: var(--hover-color); /* Hover color for the link */
 }
+
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    animation: fadein 0.5s;
+  }
+  
+  @keyframes fadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
 
 @keyframes distort {
     0% {
