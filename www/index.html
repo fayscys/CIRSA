@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <title>Citizen Incident Reporting App</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<body>
+    <header>
+        <div class="btn">
+            <i class='bx bx-menu' id="menu-icon" autoplay=""></i>
+        </div>
+        <div class="logo">C<span>I</span>R<span>SA</span></div>
+    </header>    
+
+    <!--sidebar-->
+    <nav class="sidebar">
+        <ul>
+            <li>
+                <a href="#home" class="sidebar-menu-item" data-target="home">Home</a>
+            </li>
+            <li>
+                <a href="#viewedreports" class="sidebar-menu-item vr-btn" data-target="viewedreport">Viewed Reports 
+                    <i class='bx bx-caret-down first'></i>
+                </a>
+                <ul class="vr-show">
+                    <li><a href="#all-viewed" class="sidebar-menu-item" data-target="all-viewed">All viewed</a></li>
+                    <li><a href="#recently-viewed" class="sidebar-menu-item" data-target="recently-viewed">Recently viewed</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#categories" class="sidebar-menu-item cat-btn" data-target="categories">Categories
+                    <i class='bx bx-caret-down second'></i>
+                </a>
+                <ul class="cat-show">
+                    <li><a href="#category-accident" class="sidebar-menu-item" data-target="category-accident" onclick="filterCategory('accident')">Accident</a></li>
+                    <li><a href="#category-fighting" class="sidebar-menu-item" data-target="category-fighting" onclick="filterCategory('fighting')">Fighting</a></li>
+                    <li><a href="#category-rioting" class="sidebar-menu-item" data-target="category-rioting" onclick="filterCategory('rioting')">Rioting</a></li>
+                    <li><a href="#category-theft" class="sidebar-menu-item" data-target="category-theft" onclick="filterCategory('theft')">Theft</a></li>
+                    <li><a href="#category-vandalism" class="sidebar-menu-item" data-target="category-vandalism" onclick="filterCategory('vandalism')">Vandalism</a></li>
+                    <li><a href="#category-harassment" class="sidebar-menu-item" data-target="category-harassment" onclick="filterCategory('harassment')">Harassment</a></li>
+                    <li><a href="#category-drug-use" class="sidebar-menu-item" data-target="category-drug-use" onclick="filterCategory('drug-use')">Drug Use</a></li>
+                    <li><a href="#category-trespassing" class="sidebar-menu-item" data-target="category-trespassing" onclick="filterCategory('trespassing')">Trespassing</a></li>
+                    <li><a href="#category-fraud" class="sidebar-menu-item" data-target="category-fraud" onclick="filterCategory('fraud')">Fraud</a></li>
+                    <li><a href="#category-domestic-violence" class="sidebar-menu-item" data-target="category-domestic-violence" onclick="filterCategory('domestic-violence')">Domestic Violence</a></li>
+                    <li><a href="#category-missing-persons" class="sidebar-menu-item" data-target="category-missing-persons" onclick="filterCategory('missing-persons')">Missing Persons</a></li>
+                    <li><a href="#category-traffic-violations" class="sidebar-menu-item" data-target="category-traffic-violations" onclick="filterCategory('traffic-violations')">Traffic Violations</a></li>
+                    <li><a href="#category-public-disturbance" class="sidebar-menu-item" data-target="category-public-disturbance" onclick="filterCategory('public-disturbance')">Public Disturbance</a></li>
+                </ul>  
+            </li>
+            <li>
+                <a href="#incidentform" class="sidebar-menu-item inc-btn" data-target="incidentform">Incident form
+                    <i class='bx bx-caret-down fifth'></i>
+                </a>
+                <ul class="inc-show">
+                    <li><a href="#incidentform" class="sidebar-menu-item" data-target="incidentform">Form</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#notification" class="sidebar-menu-item not-btn" data-target="notification">Notification
+                    <i class='bx bx-caret-down third'></i>
+                </a>
+                <ul class="not-show">
+                    <li><a href="#all-notifications" class="sidebar-menu-item" data-target="all-notifications">All Notifications</a></li>
+                    <li><a href="#recent-notifications" class="sidebar-menu-item" data-target="recent-notifications">Recent Notifications</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#account" class="sidebar-menu-item acc-btn" data-target="account">Account
+                    <i class='bx bx-caret-down fourth'></i>
+                </a>
+                <ul class="acc-show">
+                    <li><a href="#" class="sidebar-menu-item" data-target="account">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <!--home section-->
+    <section id="home" class="home active">
+        <div class="home-content scroll-scale">
+            <h2>Welcome to the Citizens Incident Reporting App</h2>
+            <p>Empowering communities to report and view incidents. Your vigilance helps keep our community safe. Submit incidents, browse reports, and stay informed.</p>
+        </div>
+        <div id="recent-reports">
+            <!-- Recent reports posted by users will be displayed here -->
+            <div class="report-item">
+                <h3></h3>
+                <p></p>
+                <p></p>
+                <p></p>
+                <img src="" >
+                <a href="#">View Details</a>
+            </div>
+        </div>
+    </section>
+    
+    <!--viewed report section-->
+    <section id="viewedreport" class="viewedreport">
+        <div id="all-viewed" class="viewed-content">
+            <h2>All Viewed Reports</h2>
+            <div class="report-item">
+                <h3></h3>
+                <p></p>
+                <p></p>
+                <p></p>
+                <a href="#">View Details</a>
+            </div>
+        </div>
+
+        <div id="recently-viewed" class="viewed-content">
+            <h2>Recently Viewed Reports</h2>
+            <!-- Recently viewed reports will be displayed here -->
+            <div class="report-item">
+                <h3></h3>
+                <p></p>
+                <p></p>
+                <p></p>
+                <img src="">
+                <a href="#">View Details</a>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!--incident form section-->
+    <section id="incidentform" class="incidentform">
+        <h2>Submit Incident Form</h2>
+        <form>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+            
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+            
+            <label for="category">Category:</label>
+            <select id="category" name="category" required>
+                <option value="accident">Accident</option>
+                <option value="fighting">Fighting</option>
+                <option value="rioting">Rioting</option>
+                <option value="theft">Theft</option>
+                <option value="vandalism">Vandalism</option>
+                <option value="harassment">Harassment</option>
+                <option value="drug-use">Drug Use</option>
+                <option value="trespassing">Trespassing</option>
+                <option value="fraud">Fraud</option>
+                <option value="domestic-violence">Domestic Violence</option>
+                <option value="missing-persons">Missing Persons</option>
+                <option value="traffic-violations">Traffic Violations</option>
+                <option value="public-disturbance">Public Disturbance</option>
+            </select>
+            
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+            
+            <label for="file">Upload Image:</label>
+            <input type="file" id="file" name="file">
+            
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <!-- Incident Details Section -->
+    <section id="incident-details" class="incident-details">
+        <!-- Incident details will be displayed here -->
+        <h3></h3>
+        <p></p>
+        <p></p>
+        <p></p>
+        <img src="">
+        <button id="back-to-list">Back to List</button>
+    </section>
+
+    <!--notification section-->
+    <section id="notification" class="notification">
+        <div id="all-notifications" class="notification-content">
+            <h2>All Notifications</h2>
+            <div class="notification-item">
+                <h3></h3>
+                <p></p>
+                <a href="#">View Details</a>
+            </div>
+        </div>
+        <div id="recent-notifications" class="notification-content">
+            <h2>Recent Notifications</h2>
+            <div class="notification-item">
+                <h3></h3>
+                <p></p>
+                <a href="#">View Details</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Account Section -->
+    <section id="account" class="account">
+        <div id="account-content" class="account-content">
+            <h2>Logout</h2>
+            <p>Are you sure you want to logout?</p>
+            <button id="signOutButton">Logout</button>
+            <div id="message">
+                <p>User: <span id="userName"></span></p>
+                <p>Email: <span id="userEmail"></span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Authentication Section -->
+    <section id="authentication" class="authentication">
+        <!-- Login Form -->
+        <div id="login-form">
+            <h2>Login</h2>
+            <form>
+                <label for="login-email">Email:</label>
+                <input type="email" id="login-email" name="email" required>
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" name="password" required>
+                <div class="form-action">
+                    <button type="button" id="signInButton">Login</button>
+                    <p>Don't have an account? <span><a href="#" id="showSignUp">Sign Up</a></span></p>
+                </div>
+            </form>
+        </div>
+
+        <!-- Sign Up Form -->
+        <div id="signup-form" style="display: none;">
+            <h2>Sign Up</h2>
+            <form>
+                <label for="signup-email">Email:</label>
+                <input type="email" id="signup-email" name="signup-email" required>
+                <label for="signup-password">Password:</label>
+                <input type="password" id="signup-password" name="signup-password" required>
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+                <div class="form-action">
+                    <button type="button" id="signUpButton">Sign Up</button>
+                    <p>Already have an account? <span><a href="#" id="showLogin">Login</a></span></p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script type="module" src="js/firebaseConfig.js"></script>
+    <script type="module" src="js/index.js"></script>
+    <script type="module" src="js/incidents.js"></script>
+</body>
+</html>

@@ -1,0 +1,727 @@
+@import url('https://fonts.googleapis.com/css?family=poppins:wght@900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
+}
+
+:root {
+    --text-color: #f8f1f1;
+    --hover-color: #12f7ff;
+    --bg-color: rgb(59, 59, 59); 
+    --second-bg-color: black; 
+    --big-font: 2.5rem;
+    --normal-font: 2rem;
+    --neon-box-shadow: 0 0 .5rem #12f7ff;
+    --h2-font: 3rem;
+    --font-neon-text-shadow: 0 0 10px rgba(18, 247, 255, 0.3),
+        0 0 20px rgba(18, 247, 255, 0.3),
+        0 0 30px rgba(18, 247, 255, 0.3),
+        0 0 40px rgba(18, 247, 255, 0.3),
+        0 0 70px rgba(18, 247, 255, 0.3),
+        0 0 80px rgba(18, 247, 255, 0.3),
+        0 0 100px rgba(18, 247, 255, 0.3),
+        0 0 150px rgba(18, 247, 255, 0.3);
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/*header section..............*/
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 9px 5%; 
+    background: var(--second-bg-color);
+    border-bottom: 1px solid var(--second-bg-color);
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-left: auto; 
+    position: relative;
+    display: inline-block;
+    color: white;
+    overflow: hidden;
+    animation: distort 3s infinite linear;
+}
+
+.logo span {
+    color: var(--hover-color);
+}
+
+.logo::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--hover-color);
+    overflow: hidden;
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+    animation: animateText 3s infinite linear;
+}
+
+/* Style for the menu icon */
+#menu-icon {
+    font-size: 2rem;
+    cursor: pointer;
+    background: var(--hover-color);
+    border-radius: 4px;
+    color: var(--second-bg-color);
+    transition: left 0.3s ease, content 0.3s ease;
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    line-height: 2rem;
+    width: 2rem;
+    height: 2rem;
+}
+
+#menu-icon.click {
+    left: 260px;
+}
+
+#menu-icon.click::before {
+    content: '\f00d';
+    font-family: 'FontAwesome';
+    font-size: 2rem;
+    color: var(--second-bg-color);
+    background: var(--hover-color); 
+    border-radius: 4px;
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    display: inline-block;
+    text-align: center;
+}
+/*end of header section...........*/
+
+/* nav section begins..........*/
+/* Sidebar styles */
+.sidebar {
+    position: fixed;
+    width: 250px;
+    height: 100vh;
+    left: -250px;
+    background: var(--second-bg-color);
+    transition: left 0.4s ease;
+}
+
+.sidebar.show {
+    left: 0;
+}
+
+/* Ensure only the active section is displayed */
+.sidebar-content {
+    display: none; /* Hide all sections by default */
+}
+
+.sidebar-content.active {
+    display: block; /* Show the active section */
+}
+
+/* Style for active menu item */
+.sidebar-menu-item.active {
+    background-color: var(--second-bg-color); /* Adjust this color as needed */
+    color: var(--hover-color); /* Adjust this color as needed */
+}
+
+/* Hide submenus by default */
+.sidebar ul ul {
+    display: none;
+}
+
+/* Show submenu when it has the 'show' class */
+.sidebar ul ul.show {
+    display: block;
+}
+
+/* Styles for sidebar menu items */
+nav ul {
+    background: var(--second-bg-color);
+    height: 100%;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    line-height: 60px;
+    border-bottom: 1px solid rgba(18, 247, 255, 1); /* Full opacity */
+}
+
+nav ul li:last-child {
+    border-bottom: 1px solid rgba(18, 247, 255, 0.05); /* 5% opacity */
+}
+
+nav ul li a {
+    position: relative;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding-left: 40px;
+    font-weight: 500;
+    display: block;
+    width: 100%;
+    border-left: 3px solid transparent;
+}
+
+nav ul li.active a {
+    color: var(--hover-color);
+    background: var(--second-bg-color);
+    border-left-color: var(--hover-color);
+}
+
+nav ul li a:hover {
+    color: var(--hover-color);
+    background-color: var(--second-bg-color);
+    border-left-color: var(--hover-color);
+}
+
+/* Optional: Add a scrollbar styling */
+nav ul ul {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-left: 20px; /* Indent submenus */
+}
+
+nav ul ul::-webkit-scrollbar {
+    width: 8px;
+}
+
+nav ul ul::-webkit-scrollbar-thumb {
+    background-color: var(--hover-color);
+    border-radius: 4px;
+}
+
+nav ul ul::-webkit-scrollbar-track {
+    background-color: var(--second-bg-color);
+}
+
+/* Show submenus when they have the 'show' class */
+nav ul .vr-show.show,
+nav ul .cat-show.show,
+nav ul .not-show.show,
+nav ul .inc-show.show,
+nav ul .acc-show.show {
+    display: block;
+}
+
+nav ul ul li {
+    line-height: 42px;
+    border-bottom: none;
+}
+
+nav ul ul li a {
+    font-size: 17px;
+    color: white;
+    padding-left: 60px; /* Indent submenu items */
+}
+
+nav ul li a i {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    font-size: 22px;
+    transition: transform 0.4s;
+}
+
+nav ul li a i.rotate {
+    transform: translateY(-50%) rotate(-180deg);
+}
+
+/*nav section ends.............*/
+
+/* Sections */
+section {
+    display: none;
+}
+
+section.active {
+    display: block;
+}
+
+/* Home Section */
+.home {
+    min-height: 100vh;
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 100px 10%;
+}
+
+.home-content h2 {
+    font-size: var(--big-font);
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.home-content p {
+    color: #bdbdbd;
+    margin-bottom: 20px;
+}
+
+.btn-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.btn-box .btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 45px;
+    background: var(--hover-color);
+    color: var(--bg-color);
+    font-size: 1rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: .6s;
+    box-shadow: var(--neon-box-shadow);
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    border: 2px solid var(--hover-color);
+    margin-bottom: 10px; /* Space between buttons */
+    text-align: center;
+}
+
+.btn-box .btn:hover {
+    color: var(--hover-color);
+}
+
+.btn-box .btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--bg-color);
+    width: 0;
+    height: 100%;
+    z-index: -1;
+    transition: .4s;
+}
+
+.btn-box .btn:hover::before {
+    width: 100%;
+}
+
+/* Report Items in Home Section */
+#recent-reports .report-item {
+    background: var(--second-bg-color);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--hover-color);
+}
+
+#recent-reports .report-item h3 {
+    font-size: var(--normal-font);
+    margin-bottom: 10px;
+}
+
+#recent-reports .report-item p {
+    color: #bdbdbd;
+    margin-bottom: 10px;
+}
+
+#recent-reports .report-item a {
+    color: var(--hover-color);
+    text-decoration: none;
+}
+
+/* Recent Reports */
+#recent-reports {
+    margin-top: 40px;
+    width: 100%; 
+}
+
+.report-item {
+    background: var(--second-bg-color);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--hover-color);
+}
+
+.report-item h3 {
+    font-size: var(--normal-font);
+    margin-bottom: 10px;
+}
+
+.report-item p {
+    color: #bdbdbd;
+    margin-bottom: 10px;
+}
+
+.report-item a {
+    color: var(--hover-color);
+    text-decoration: none;
+}
+
+.report-item-details {
+    background: var(--second-bg-color);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--hover-color);
+}
+
+.report-item-details img {
+    border: 2px solid white;
+    width: 50%;
+    height: auto;
+    margin: 20px auto;
+}
+
+.report-item-details h3 {
+    font-size: var(--normal-font);
+    margin-bottom: 10px;
+}
+
+.report-item-details a {
+    color: var(--hover-color);
+    text-decoration: none;
+}
+
+/* Viewed Report Section */
+.viewedreport {
+    padding: 100px 10%;
+    text-align: center;
+    background: var(--second-bg-color); /* Set background color to match homepage */
+    color: var (--text-color);
+}
+
+.viewedreport h2 {
+    font-size: var(--h2-font);
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.viewedreport .report-item {
+    background: var(--second-bg-color);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.viewedreport .report-item h3 {
+    font-size: var(--normal-font);
+    margin-bottom: 10px;
+}
+
+.viewedreport .report-item p {
+    color: #bdbdbd;
+    margin-bottom: 10px;
+}
+
+.viewedreport .report-item a {
+    color: var(--hover-color);
+    text-decoration: none;
+}
+
+
+/* Incident Form Section */
+.incidentform {
+    padding: 100px 10%;
+    text-align: center;
+    background-color: var(--bg-color); /* Set form section background to --bg-color */
+    color: var(--text-color);
+}
+
+.incidentform h2 {
+    font-size: var(--h2-font);
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--second-bg-color); /* Background color of form */
+    border: 2px solid var(--hover-color); /* Adjust border width */
+    padding: 20px; /* Add padding inside the form for spacing */
+    border-radius: 5px; /* Ensure rounded corners */
+}
+
+form label {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    align-self: flex-start;
+}
+
+form input,
+form textarea,
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: black; /* Background color of input elements */
+    color: var(--hover-color); /* Text color of input elements */
+    border: 1px solid var(--hover-color); /* Border color of input elements */
+    border-radius: 5px;
+    font-size: 1rem;
+    box-shadow: var(--neon-box-shadow);
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+    outline: none;
+    box-shadow: 0 0 10px var(--hover-color);
+}
+
+form button {
+    width: 150px;
+    height: 45px;
+    background: black; /* Button background color */
+    color: var(--hover-color); /* Button text color */
+    font-size: 1rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: .6s;
+    box-shadow: var(--neon-box-shadow);
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    border: 2px solid var(--hover-color); /* Button border color */
+    text-align: center;
+    cursor: pointer;
+}
+
+form button:hover {
+    color: black; 
+    background: var(--hover-color); 
+}
+
+form button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--hover-color); /* Background color of button when hovered */
+    width: 0;
+    height: 100%;
+    z-index: -1;
+    transition: .4s;
+}
+
+form button:hover::before {
+    width: 100%;
+}
+
+/* Categories List in Form */
+form .categories-list a {
+    color: var(--hover-color); /* Text color for categories list in form */
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+form .categories-list a:hover {
+    color: var(--text-color); /* Text color when hovered */
+    text-shadow: 0 0 10px rgba(18, 247, 255, 0.6),
+        0 0 20px rgba(18, 247, 255, 0.6);
+}
+
+/* Notification Section */
+#notification {
+    padding: 60px 10%; /* Adjust padding as needed */
+    text-align: center;
+}
+
+.notification-content {
+    margin-top: 40px;
+    width: 100%;
+}
+
+.notification-content h2 {
+    font-size: var(--big-font);
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.notification-item {
+    background: var(--second-bg-color);
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--hover-color); /* Adjusted border size */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.notification-item h3 {
+    font-size: var(--normal-font);
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.notification-item p {
+    color: #bdbdbd;
+    margin-bottom: 10px;
+}
+
+.notification-item a {
+    color: var(--hover-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Account Section */
+.account {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 100px 10%;
+    background-color: var(--bg-color); /* Match the background color */
+}
+
+.account-content {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    background: var(--second-bg-color);
+    border: 2px solid var(--hover-color);
+    border-radius: 10px;
+    box-shadow: var(--neon-box-shadow);
+    text-align: center;
+}
+
+.account-content h2 {
+    font-size: var(--big-font);
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.account-content p {
+    color: #bdbdbd;
+    margin-bottom: 20px;
+}
+
+.account-content button {
+    width: 150px;
+    height: 45px;
+    background: black; /* Button background color */
+    color: var(--hover-color); /* Button text color */
+    font-size: 1rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: .6s;
+    box-shadow: var(--neon-box-shadow);
+    border-radius: 5px;
+    position: absolute;
+    overflow: hidden;
+    z-index: 1;
+    border: 2px solid var(--hover-color); /* Button border color */
+    text-align: center;
+    cursor: pointer;
+    margin: 0 auto;
+    display: block;
+}
+
+.account-content button:hover {
+    color: black;
+    background: var(--hover-color);
+}
+
+.account-content button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--hover-color);
+    width: 0;
+    height: 100%;
+    z-index: -1;
+    transition: .4s;
+}
+
+.account-content button:hover::before {
+    width: 100%;
+}
+
+/* Authentication Section */
+.authentication {
+    padding: 100px 10%;
+    background: var(--second-bg-color); /* Match the background color of the section */
+    color: var(--text-color);
+    padding-bottom: 200px; /* Add extra padding to the bottom to move content up */
+}
+
+.authentication h2 {
+    font-size: var(--h2-font);
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Additional CSS for the Authentication Section */
+.form-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.form-action p {
+    margin-top: 10px; /* Add some space between the button and the text */
+    font-size: 14px; /* Adjust the font size if needed */
+}
+
+.form-action span a {
+    color: var(--text-color); /* Default link color */
+    text-decoration: none; /* Remove underline */
+}
+
+.form-action span a:hover {
+    color: var(--hover-color); /* Hover color for the link */
+}
+
+@keyframes distort {
+    0% {
+      text-shadow: 0 0 10px rgba(18, 247, 255, 0.3);
+    }
+    50% {
+      text-shadow: 0 0 20px rgba(18, 247, 255, 0.6);
+    }
+    100% {
+      text-shadow: 0 0 10px rgba(18, 247, 255, 0.3);
+    }
+}
