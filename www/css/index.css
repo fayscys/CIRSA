@@ -62,11 +62,11 @@ header {
     z-index: 1000;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: 100%;
-    padding: 9px 5%; 
+    padding: 9px 5%;
     background: var(--second-bg-color);
     border-bottom: 1px solid var(--second-bg-color);
-    justify-content: space-between;
 }
 
 .logo {
@@ -82,6 +82,7 @@ header {
 
 .logo span {
     color: var(--hover-color);
+    animation: distort 3s infinite linear;
 }
 
 .logo::before {
@@ -132,12 +133,13 @@ header {
 
 /* Sidebar Section */
 .sidebar {
-    position: relative;
+    position: fixed;
     width: 250px;
     height: 100vh;
     left: -250px;
     background: var(--second-bg-color);
     transition: left 0.4s ease;
+    
 }
 
 .sidebar.show {
@@ -262,12 +264,12 @@ section.active {
 /* Home Section */
 .home {
     min-height: 100vh;
-    display: flex;
+    display: block;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 100px 10%;
+    padding: 100px 10% ;
 }
 
 .home-content h2 {
@@ -360,6 +362,11 @@ section.active {
 .report-item a {
     color: var(--hover-color);
     text-decoration: none;
+}
+
+.report-item img {
+    border: 2px solid white;
+    border-radius: 10px;
 }
 
 /* Viewed Report Section */
