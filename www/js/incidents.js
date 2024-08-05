@@ -1,9 +1,19 @@
 import { auth } from './firebaseConfig.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js";
 
-const postsContainer = document.getElementById('recent-reports');
 const apiUrl = 'https://api.jsonbin.io/v3/b/66ae379ce41b4d34e41b2202';
-const apiKey = '$2a$10$Pjo.Uw6T477fr03n1GUrveeCl.0Q6Au6vcfp6gHXUfaJLTFcD9EOO'; // Replace with your actual API key
+const apiKey = '$2a$10$Pjo.Uw6T477fr03n1GUrveeCl.0Q6Au6vcfp6gHXUfaJLTFcD9EOO';
+
+const storage = getStorage();
+
+async function uploadImage(file) {
+    const storageRef = ref(storage, 'images/' + file.name);
+    await uploadBytes(storageRef, file);
+    return await getDownloadURL(storageRef);
+}
+
+const recentReports = document.getElementById('recent-reports');
 
 // Function to fetch and display incidents
 function fetchAndDisplayIncidents() {
@@ -14,7 +24,7 @@ function fetchAndDisplayIncidents() {
     })
     .then(response => response.json())
     .then(data => {
-        postsContainer.innerHTML = ''; // Clear previous posts
+        recentReports.innerHTML = ''; // Clear previous posts
 
         if (data.record && data.record.record && data.record.record.posts && Array.isArray(data.record.record.posts)) {
             data.record.record.posts.forEach(incident => {
@@ -43,10 +53,10 @@ function displayIncident(incident) {
         <p><strong>Location:</strong> ${incident.location}</p>
         ${incident.fileUrl ? `<img src="${incident.fileUrl}" alt="Incident Image" />` : ''}
         <a href="#" class="view-details-link" data-incident='${JSON.stringify(incident)}'>View Details</a>
-        ${isOwner ? `<button class="edit-post" data-id="${incident.id}">Edit</button>` : ''}
+        ${isOwner ? `<button class="edit-post" data-incident='${JSON.stringify(incident)}'>Edit</button>` : ''}
         ${isOwner ? `<button class="delete-post" data-id="${incident.id}">Delete</button>` : ''}
     `;
-    postsContainer.appendChild(reportElement);
+    recentReports.appendChild(reportElement);
 
     // Add event listeners for view details, edit, and delete buttons
     reportElement.querySelector('.view-details-link').addEventListener('click', (event) => {
@@ -56,12 +66,17 @@ function displayIncident(incident) {
     });
 
     if (isOwner) {
-        reportElement.querySelector('.edit-post').addEventListener('click', () => {
-            editIncident(incident);
+        reportElement.querySelector('.edit-post').addEventListener('click', (event) => {
+            event.preventDefault();
+            const incidentData = JSON.parse(event.currentTarget.getAttribute('data-incident'));
+            populateFormFields(incidentData);
+            showIncidentForm();
         });
 
         reportElement.querySelector('.delete-post').addEventListener('click', () => {
-            deleteIncident(incident.id);
+            if (confirm('Are you sure you want to delete this incident?')) {
+                deleteIncident(incident.id);
+            }
         });
     }
 }
@@ -79,11 +94,11 @@ function displayIncidentDetails(incident) {
     `;
 
     incidentDetails.style.display = 'block';
-    postsContainer.style.display = 'none';
+    recentReports.style.display = 'none';
 
     document.getElementById('back-to-list').addEventListener('click', () => {
         incidentDetails.style.display = 'none';
-        postsContainer.style.display = 'block';
+        recentReports.style.display = 'block';
     });
 }
 
@@ -106,7 +121,7 @@ async function submitIncidentForm(event) {
 
     let fileUrl = '';
     if (file) {
-        fileUrl = URL.createObjectURL(file);
+        fileUrl = await uploadImage(file);
     }
 
     fetch(`${apiUrl}/latest`, {
@@ -259,7 +274,7 @@ function deleteIncident(incidentId) {
 document.querySelector('#incidentform form').addEventListener('submit', submitIncidentForm);
 
 // Call fetchAndDisplayIncidents when the page loads
-document.addEventListener('DOMContentLoaded', () => {
+window.onload = () => {
     onAuthStateChanged(auth, (user) => {
         if (user) {
             fetchAndDisplayIncidents();
@@ -267,4 +282,20 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('You need to be logged in to view incidents.');
         }
     });
-});
+};
+
+// Function to populate form fields with incident data
+function populateFormFields(incident) {
+    document.getElementById('title').value = incident.title;
+    document.getElementById('description').value = incident.description;
+    document.getElementById('category').value = incident.category;
+    document.getElementById('location').value = incident.location;
+}
+
+// Function to show the incident form
+function showIncidentForm() {
+    document.querySelectorAll('section').forEach(section => {
+        section.style.display = 'none';
+    });
+    document.getElementById('incidentform').style.display = 'block';
+}

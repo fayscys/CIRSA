@@ -27,6 +27,27 @@
         0 0 150px rgba(18, 247, 255, 0.3);
 }
 
+
+::-webkit-scrollbar {
+    height: .5rem;
+    width: .5rem;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--second-bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--hover-color);
+    border-radius: 5rem;
+}
+
+/* Firefox */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--hover-color) var(--second-bg-color);
+}
+
 body {
     font-family: "Poppins", sans-serif;
     background-color: var(--bg-color);
@@ -567,7 +588,7 @@ form .categories-list a:hover {
     align-items: center;
     margin-top: -450px;
     padding: 30px;
-    height: 400px;
+    min-height: 600px;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
@@ -605,6 +626,7 @@ form .categories-list a:hover {
     letter-spacing: 1px;
     font-weight: 600;
     transition: .6s;
+    top: -10px;
     box-shadow: var(--neon-box-shadow);
     border-radius: 5px;
     position: relative;
@@ -665,6 +687,49 @@ form .categories-list a:hover {
     margin-left: 20px;
 }
 
+/* Add styles for edit and delete buttons */
+.edit-post, .delete-post {
+    width: 150px;
+    height: 45px;
+    background: black;
+    color: var(--hover-color);
+    font-size: 1rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: .6s;
+    box-shadow: var(--neon-box-shadow);
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    border: 2px solid var(--hover-color);
+    text-align: center;
+    cursor: pointer;
+    margin: 10px 10px;
+
+}
+
+.edit-post:hover, .delete-post:hover{
+    color: black;
+    background: var(--hover-color);
+}
+
+.edit-post::before, .delete-post::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--hover-color);
+    width: 0;
+    height: 100%;
+    z-index: -1;
+    transition: .4s;
+}
+
+.edit-post:hover::before, .delete-post:hover::before {
+    width: 100%;
+    
+}
 /* Notification Section */
 #notification {
     padding: 60px 10%; /* Adjust padding as needed */
