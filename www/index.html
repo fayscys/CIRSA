@@ -131,7 +131,24 @@
         </div>
 
     </section>
-
+        
+    <!-- Category Section -->
+    <section id="category" class="category viewedreport">
+        <div id="category-content" class="viewed-content">
+            <h2 id="selected-category">Category</h2>
+            <div id="category-reports">
+                <!-- Reports for the selected category will be displayed here -->
+                <div class="report-item">
+                    <h3></h3>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <img src="">
+                    <a href="#">View Details</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!--incident form section-->
     <section id="incidentform" class="incidentform">
@@ -165,7 +182,9 @@
             
             <label for="file">Upload Image:</label>
             <input type="file" id="file" name="file">
-            
+            <input type="hidden" id="latitude" name="latitude">
+            <input type="hidden" id="longitude" name="longitude">
+        
             <button type="submit">Submit</button>
         </form>
     </section>
@@ -252,5 +271,6 @@
     <script type="module" src="js/firebaseConfig.js"></script>
     <script type="module" src="js/index.js"></script>
     <script type="module" src="js/incidents.js"></script>
+    <script type="module" src="js/notifications.js"></script>
 </body>
 </html>

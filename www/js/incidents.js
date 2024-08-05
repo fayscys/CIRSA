@@ -46,6 +46,7 @@ function displayIncident(incident) {
 
     const reportElement = document.createElement('div');
     reportElement.classList.add('report-item');
+    reportElement.setAttribute('data-category', incident.category);
     reportElement.innerHTML = `
         <h3>${incident.title}</h3>
         <p>${incident.description}</p>
@@ -69,8 +70,9 @@ function displayIncident(incident) {
         reportElement.querySelector('.edit-post').addEventListener('click', (event) => {
             event.preventDefault();
             const incidentData = JSON.parse(event.currentTarget.getAttribute('data-incident'));
-            populateFormFields(incidentData);
+            editIncident(incidentData);
             showIncidentForm();
+            updateSubmitButtonText('Update'); // Change button text to 'Update'
         });
 
         reportElement.querySelector('.delete-post').addEventListener('click', () => {
@@ -105,67 +107,72 @@ function displayIncidentDetails(incident) {
 // Function to handle form submission
 async function submitIncidentForm(event) {
     event.preventDefault();
-
     const user = auth.currentUser;
     if (!user) {
         alert('You need to be logged in to submit an incident.');
         return;
     }
-
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
     const category = document.getElementById('category').value;
-    const location = document.getElementById('location').value;
     const fileInput = document.getElementById('file');
     const file = fileInput.files[0];
-
     let fileUrl = '';
     if (file) {
         fileUrl = await uploadImage(file);
     }
-
-    fetch(`${apiUrl}/latest`, {
-        headers: {
-            'X-Master-Key': apiKey
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        const newIncident = {
-            id: (data.record.record.posts.length + 1).toString(),
+    navigator.geolocation.getCurrentPosition((position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        const incidentData = {
             title,
             description,
             category,
-            location,
+            location: `${latitude}, ${longitude}`,
             fileUrl,
+            latitude,
+            longitude,
             timestamp: new Date(),
-            userId: user.uid // Store the user's ID with the incident
+            userId: user.uid
         };
-
-        data.record.record.posts.push(newIncident);
-
-        return fetch(apiUrl, {
-            method: 'PUT',
+        // Submit the incident data to the API
+        fetch(`${apiUrl}/latest`, {
             headers: {
-                'Content-Type': 'application/json',
                 'X-Master-Key': apiKey
-            },
-            body: JSON.stringify({ record: data.record.record })
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const newIncident = {
+                id: (data.record.record.posts.length + 1).toString(),
+                ...incidentData
+            };
+            data.record.record.posts.push(newIncident);
+            return fetch(apiUrl, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Master-Key': apiKey
+                },
+                body: JSON.stringify({ record: data.record.record })
+            });
+        })
+        .then(response => response.json())
+        .then(() => {
+            fetchAndDisplayIncidents();
+            document.getElementById('title').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('category').value = '';
+            fileInput.value = '';
+            updateSubmitButtonText('Submit'); // Change button text to 'Submit'
+            alert('Incident submitted successfully');
+        })
+        .catch(error => {
+            console.error('Error submitting incident:', error);
+            alert('Error submitting incident');
         });
-    })
-    .then(response => response.json())
-    .then(() => {
-        fetchAndDisplayIncidents();
-        document.getElementById('title').value = '';
-        document.getElementById('description').value = '';
-        document.getElementById('category').value = '';
-        document.getElementById('location').value = '';
-        fileInput.value = ''; // Clear file input
-        alert('Incident submitted successfully');
-    })
-    .catch(error => {
-        console.error('Error submitting incident:', error);
-        alert('Error submitting incident');
+    }, (error) => {
+        console.error('Geolocation error:', error);
     });
 }
 
@@ -289,7 +296,6 @@ function populateFormFields(incident) {
     document.getElementById('title').value = incident.title;
     document.getElementById('description').value = incident.description;
     document.getElementById('category').value = incident.category;
-    document.getElementById('location').value = incident.location;
 }
 
 // Function to show the incident form
@@ -299,3 +305,10 @@ function showIncidentForm() {
     });
     document.getElementById('incidentform').style.display = 'block';
 }
+
+// Function to update the submit button text
+function updateSubmitButtonText(text) {
+    const submitButton = document.querySelector('#incidentform button[type="submit"]');
+    submitButton.textContent = text;
+}
+
