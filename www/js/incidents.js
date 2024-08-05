@@ -312,3 +312,4 @@ function updateSubmitButtonText(text) {
     submitButton.textContent = text;
 }
 
+

@@ -1,7 +1,6 @@
-//index.js
 import { displayNotification } from './notifications.js';
 import { auth } from './firebaseConfig.js';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "(link unavailable)";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
 import './incidents.js';
 
 // DOM Elements
@@ -174,4 +173,6 @@ navigator.geolocation.getCurrentPosition((position) => {
 }, (error) => {
   console.error(`Geolocation error: ${error.message}`);
 });
+
+
 
