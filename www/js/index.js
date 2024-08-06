@@ -43,6 +43,17 @@ function showHomeOnly() {
   homeSection.style.display = "block";
 }
 
+function showHomeSection() {
+  document.querySelectorAll('section').forEach(section => {
+      section.style.display = 'none';
+  });
+  document.getElementById('home').style.display = 'block';
+  fetchAndDisplayIncidents(); // Re-fetch and display incidents
+}
+
+// Ensure this function is called when clicking the home menu
+document.querySelector('a[data-target="home"]').addEventListener('click', showHomeSection);
+
 // Auth Functions
 const userSignIn = async () => {
   const email = document.getElementById("login-email").value;
@@ -173,6 +184,5 @@ navigator.geolocation.getCurrentPosition((position) => {
 }, (error) => {
   console.error(`Geolocation error: ${error.message}`);
 });
-
 
 
