@@ -911,5 +911,8 @@ form .categories-list a:hover {
         z-index: 2;
         height: 100%;
     }
+    .viewedreport {
+        padding-bottom: 100%;
+    }
 }
 
