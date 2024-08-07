@@ -297,10 +297,34 @@ function updateSubmitButtonText(text) {
     submitButton.textContent = text;
 }
 
+// Function to handle navigation and refresh
+function setupNavigation() {
+    const sidebarItems = document.querySelectorAll('.sidebar-menu-item');
+
+    sidebarItems.forEach(item => {
+        item.addEventListener('click', (event) => {
+            event.preventDefault();
+            const target = event.currentTarget.getAttribute('data-target');
+            showSection(target);
+            if (target === 'home') {
+                fetchAndDisplayIncidents(); // Refresh incidents on home click
+            }
+        });
+    });
+}
+
+// Function to show the appropriate section
+function showSection(target) {
+    document.querySelectorAll('section').forEach(section => {
+        section.style.display = 'none';
+    });
+    document.getElementById(target).style.display = 'block';
+}
+
 // Add event listener to the form
 document.querySelector('#incidentform form').addEventListener('submit', submitIncidentForm);
 
-// Call fetchAndDisplayIncidents when the page loads
+// Call fetchAndDisplayIncidents and setupNavigation when the page loads
 window.onload = () => {
     onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -309,5 +333,6 @@ window.onload = () => {
             alert('You need to be logged in to view incidents.');
         }
     });
+    setupNavigation();
 };
 
