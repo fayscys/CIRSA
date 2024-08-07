@@ -909,6 +909,7 @@ form .categories-list a:hover {
     /* Adjust sidebar to have higher z-index */
     .sidebar {
         z-index: 2;
+        height: 100%;
     }
 }
 
