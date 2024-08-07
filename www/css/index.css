@@ -720,6 +720,7 @@ form .categories-list a:hover {
     text-align: center;
     padding: 100px 10%;
     background-color: var(--bg-color);
+    margin-left: 250px;
 }
 
 .account-content {
@@ -868,6 +869,9 @@ form .categories-list a:hover {
         width: 100%;
         height: auto;
     }
+    .account {
+        margin-left: 10px;
+    }
 
     .report-item, .notification-item, .incident-details, .account-content, .form {
         margin-bottom: 10px; /* Adjust margin bottom */
@@ -875,6 +879,7 @@ form .categories-list a:hover {
 
     .notification {
         padding: 100px 5%;
+        padding-bottom: 100%;
     }
 
     .notification h2 {
