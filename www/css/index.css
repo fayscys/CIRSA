@@ -204,7 +204,7 @@ nav ul li.active a {
 
 nav ul li a:hover {
     color: var(--hover-color);
-    background-color: var(--second-bg-color);
+    background-color: var (--second-bg-color);
     border-left-color: var(--hover-color);
 }
 
@@ -298,7 +298,7 @@ section.active {
     width: 150px;
     height: 45px;
     background: var(--hover-color);
-    color: var (--bg-color);
+    color: var(--bg-color);
     font-size: 1rem;
     letter-spacing: 1px;
     font-weight: 600;
@@ -486,7 +486,7 @@ form button {
     letter-spacing: 1px;
     font-weight: 600;
     transition: .6s;
-    box-shadow: var (--neon-box-shadow);
+    box-shadow: var(--neon-box-shadow);
     border-radius: 5px;
     position: relative;
     overflow: hidden;
@@ -762,7 +762,6 @@ form .categories-list a:hover {
     text-align: center;
     cursor: pointer;
     margin: 10px auto;
-    
 }
 
 .account button:hover {
@@ -889,6 +888,22 @@ form .categories-list a:hover {
     .notification-content {
         margin-top: 10px; /* Adjusted margin-top for mobile */
     }
+
+    /* Ensure buttons do not overlap with the sidebar */
+    .btn-box, .report-item .actions, .edit-post, .delete-post, .incident-details button, .form-action button {
+        z-index: 1;
+        position: relative;
+    }
     
+    /* Ensure no elements overlap with the sidebar */
+    .home, .viewedreport, .incidentform, .account, .authentication, .notification {
+        position: relative;
+        z-index: 0;
+    }
+
+    /* Adjust sidebar to have higher z-index */
+    .sidebar {
+        z-index: 2;
+    }
 }
 

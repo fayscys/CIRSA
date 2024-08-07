@@ -6,14 +6,14 @@ const apiUrl = 'https://api.jsonbin.io/v3/b/66ae379ce41b4d34e41b2202';
 const apiKey = '$2a$10$Pjo.Uw6T477fr03n1GUrveeCl.0Q6Au6vcfp6gHXUfaJLTFcD9EOO';
 
 const storage = getStorage();
+const recentReports = document.getElementById('recent-reports');
 
+// Function to upload an image to Firebase Storage
 async function uploadImage(file) {
     const storageRef = ref(storage, 'images/' + file.name);
     await uploadBytes(storageRef, file);
     return await getDownloadURL(storageRef);
 }
-
-const recentReports = document.getElementById('recent-reports');
 
 // Function to fetch and display incidents
 function fetchAndDisplayIncidents() {
@@ -27,6 +27,9 @@ function fetchAndDisplayIncidents() {
         recentReports.innerHTML = ''; // Clear previous posts
 
         if (data.record && data.record.record && data.record.record.posts && Array.isArray(data.record.record.posts)) {
+            // Sort the incidents by timestamp in descending order
+            data.record.record.posts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
             data.record.record.posts.forEach(incident => {
                 displayIncident(incident);
             });
@@ -132,7 +135,7 @@ async function submitIncidentForm(event) {
             fileUrl,
             latitude,
             longitude,
-            timestamp: new Date(),
+            timestamp: new Date(), // Include timestamp
             userId: user.uid
         };
         // Submit the incident data to the API
@@ -178,12 +181,7 @@ async function submitIncidentForm(event) {
 
 // Function to edit an incident
 function editIncident(incident) {
-    document.getElementById('title').value = incident.title;
-    document.getElementById('description').value = incident.description;
-    document.getElementById('category').value = incident.category;
-    document.getElementById('location').value = incident.location;
-    document.getElementById('file').value = ''; // Clear file input
-
+    populateFormFields(incident);
     const submitButton = document.querySelector('form button[type="submit"]');
     submitButton.textContent = 'Update';
     submitButton.removeEventListener('click', submitIncidentForm);
@@ -216,7 +214,8 @@ function editIncident(incident) {
                 description,
                 category,
                 location,
-                fileUrl
+                fileUrl,
+                timestamp: new Date() // Update timestamp
             };
 
             const index = data.record.record.posts.findIndex(post => post.id === incident.id);
@@ -277,20 +276,6 @@ function deleteIncident(incidentId) {
     });
 }
 
-// Add event listener to the form
-document.querySelector('#incidentform form').addEventListener('submit', submitIncidentForm);
-
-// Call fetchAndDisplayIncidents when the page loads
-window.onload = () => {
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            fetchAndDisplayIncidents();
-        } else {
-            alert('You need to be logged in to view incidents.');
-        }
-    });
-};
-
 // Function to populate form fields with incident data
 function populateFormFields(incident) {
     document.getElementById('title').value = incident.title;
@@ -312,4 +297,17 @@ function updateSubmitButtonText(text) {
     submitButton.textContent = text;
 }
 
+// Add event listener to the form
+document.querySelector('#incidentform form').addEventListener('submit', submitIncidentForm);
+
+// Call fetchAndDisplayIncidents when the page loads
+window.onload = () => {
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            fetchAndDisplayIncidents();
+        } else {
+            alert('You need to be logged in to view incidents.');
+        }
+    });
+};
 
