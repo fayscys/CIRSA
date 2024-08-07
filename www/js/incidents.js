@@ -1,6 +1,6 @@
 import { auth } from './firebaseConfig.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js';
 
 const apiUrl = 'https://api.jsonbin.io/v3/b/66ae379ce41b4d34e41b2202';
 const apiKey = '$2a$10$Pjo.Uw6T477fr03n1GUrveeCl.0Q6Au6vcfp6gHXUfaJLTFcD9EOO';
@@ -13,6 +13,13 @@ async function uploadImage(file) {
     const storageRef = ref(storage, 'images/' + file.name);
     await uploadBytes(storageRef, file);
     return await getDownloadURL(storageRef);
+}
+
+// Function to truncate description
+function truncateDescription(description, maxLength = 100) {
+    return description.length > maxLength
+        ? description.substring(0, maxLength) + '...'
+        : description;
 }
 
 // Function to fetch and display incidents
@@ -52,7 +59,7 @@ function displayIncident(incident) {
     reportElement.setAttribute('data-category', incident.category);
     reportElement.innerHTML = `
         <h3>${incident.title}</h3>
-        <p>${incident.description}</p>
+        <p class="description">${truncateDescription(incident.description)}</p>
         <p><strong>Category:</strong> ${incident.category}</p>
         <p><strong>Location:</strong> ${incident.location}</p>
         ${incident.fileUrl ? `<img src="${incident.fileUrl}" alt="Incident Image" />` : ''}
