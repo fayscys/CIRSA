@@ -4,16 +4,15 @@ export class NotificationManager {
     this.notificationSection = document.getElementById('notification');
   }
 
-  displayNotification(title, message, type = 'info') {
+  displayNotification(message, type = 'info') {
     const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
+    notification.className = `popup-notification ${type}`;
     notification.innerHTML = `
-      <h3>${title}</h3>
       <p>${message}</p>
-      <button class="close-notification">x</button>
+      <button class="btn close-notification">OK</button>
     `;
 
-    this.notificationSection.appendChild(notification);
+    document.body.appendChild(notification);
 
     notification.querySelector('.close-notification').addEventListener('click', () => {
       this.removeNotification(notification);
@@ -23,7 +22,7 @@ export class NotificationManager {
   }
 
   removeNotification(notification) {
-    this.notificationSection.removeChild(notification);
+    document.body.removeChild(notification);
     this.notifications = this.notifications.filter((n) => n !== notification);
   }
 
@@ -42,20 +41,21 @@ export class NotificationManager {
 
 const notificationManager = new NotificationManager();
 
-export function displayNotification(title, message, type) {
-notificationManager.displayNotification(title, message, type);
+export function displayNotification(message, type) {
+  notificationManager.displayNotification(message, type);
 }
 
 export function removeNotification(notification) {
-notificationManager.removeNotification(notification);
+  notificationManager.removeNotification(notification);
 }
 
 export function updateNotificationList() {
-notificationManager.updateNotificationList();
+  notificationManager.updateNotificationList();
 }
 
 export function clearNotifications() {
-notificationManager.clearNotifications();
+  notificationManager.clearNotifications();
 }
+
 
 

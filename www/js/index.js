@@ -62,14 +62,13 @@ const userSignIn = async () => {
     .then((result) => {
       const user = result.user;
       console.log(user);
-      displayNotification('Success', 'You have signed in successfully!', 'success');
+      displayNotification('You have signed in successfully!', 'success');
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.error(`Error ${errorCode}: ${errorMessage}`);
-      alert(`Error: ${errorMessage}`);
-      displayNotification('Error', `Sign in failed: ${errorMessage}`, 'error');
+      displayNotification(`Sign in failed: ${errorMessage}`, 'error');
     });
 };
 
@@ -80,20 +79,19 @@ const userSignUp = async () => {
     .then((result) => {
       const user = result.user;
       console.log(user);
-      displayNotification('Success', 'You have signed up successfully!', 'success');
+      displayNotification('You have signed up successfully!', 'success');
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.error(`Error ${errorCode}: ${errorMessage}`);
-      alert(`Error: ${errorMessage}`);
-      displayNotification('Error', `Sign up failed: ${errorMessage}`, 'error');
+      displayNotification(`Sign up failed: ${errorMessage}`, 'error');
     });
 };
 
 const userSignOut = async () => {
   signOut(auth).then(() => {
-    alert("You have signed out successfully!");
+    displayNotification('You have signed out successfully!', 'success');
     showAuthentication();
   }).catch((error) => {
     console.error(`Sign out error: ${error.message}`);
@@ -184,5 +182,3 @@ navigator.geolocation.getCurrentPosition((position) => {
 }, (error) => {
   console.error(`Geolocation error: ${error.message}`);
 });
-
-

@@ -1,6 +1,7 @@
 import { auth } from './firebaseConfig.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js';
+import { displayNotification } from './notifications.js';
 
 const apiUrl = 'https://api.jsonbin.io/v3/b/66ae379ce41b4d34e41b2202';
 const apiKey = '$2a$10$Pjo.Uw6T477fr03n1GUrveeCl.0Q6Au6vcfp6gHXUfaJLTFcD9EOO';
@@ -86,9 +87,9 @@ function displayIncident(incident) {
         });
 
         reportElement.querySelector('.delete-post').addEventListener('click', () => {
-            if (confirm('Are you sure you want to delete this incident?')) {
+            showConfirmationModal(() => {
                 deleteIncident(incident.id);
-            }
+            });
         });
     }
 }
@@ -119,7 +120,7 @@ async function submitIncidentForm(event) {
     event.preventDefault();
     const user = auth.currentUser;
     if (!user) {
-        alert('You need to be logged in to submit an incident.');
+        displayNotification('You need to be logged in to submit an incident.', '.popup-notification');
         return;
     }
     const title = document.getElementById('title').value;
@@ -175,11 +176,11 @@ async function submitIncidentForm(event) {
             document.getElementById('category').value = '';
             fileInput.value = '';
             updateSubmitButtonText('Submit'); // Change button text to 'Submit'
-            alert('Incident submitted successfully');
+            displayNotification('Incident submitted successfully', '.popup-notification');
         })
         .catch(error => {
             console.error('Error submitting incident:', error);
-            alert('Error submitting incident');
+            displayNotification('Error submitting incident', '.popup-notification');
         });
     }, (error) => {
         console.error('Geolocation error:', error);
@@ -243,11 +244,11 @@ function editIncident(incident) {
             submitButton.textContent = 'Submit';
             submitButton.removeEventListener('click', updateIncident);
             submitButton.addEventListener('click', submitIncidentForm);
-            alert('Incident updated successfully');
+            displayNotification('Incident updated successfully', '.popup-notification');
         })
         .catch(error => {
             console.error('Error updating incident:', error);
-            alert('Error updating incident');
+            displayNotification('Error updating incident', '.popup-notification');
         });
     });
 }
@@ -275,12 +276,32 @@ function deleteIncident(incidentId) {
     .then(response => response.json())
     .then(() => {
         fetchAndDisplayIncidents();
-        alert('Incident deleted successfully');
+        displayNotification('Incident deleted successfully', '.popup-notification');
     })
     .catch(error => {
         console.error('Error deleting incident:', error);
-        alert('Error deleting incident');
+        displayNotification('Error deleting incident', '.popup-notification');
     });
+}
+
+// Function to show the confirmation modal
+function showConfirmationModal(onConfirm) {
+    const modal = document.getElementById('confirmation-modal');
+    const confirmButton = document.getElementById('confirm-delete');
+    const cancelButton = document.getElementById('cancel-delete');
+
+    modal.style.display = 'flex'; // Show the modal
+
+    // Confirm button action
+    confirmButton.onclick = () => {
+        modal.style.display = 'none'; // Hide the modal
+        onConfirm(); // Execute the confirm action
+    };
+
+    // Cancel button action
+    cancelButton.onclick = () => {
+        modal.style.display = 'none'; // Hide the modal
+    };
 }
 
 // Function to populate form fields with incident data
@@ -337,7 +358,7 @@ window.onload = () => {
         if (user) {
             fetchAndDisplayIncidents();
         } else {
-            alert('You need to be logged in to view incidents.');
+            displayNotification('You need to be logged in to view incidents.', '.popup-notification');
         }
     });
     setupNavigation();
