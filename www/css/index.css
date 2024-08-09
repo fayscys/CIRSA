@@ -886,6 +886,52 @@ form .categories-list a:hover {
     width: 100%;
 }
 
+/* Styling for the Delete Button in Notifications */
+.notification-item .delete-notification {
+    width: 100px;
+    height: 35px;
+    background: black;
+    color: var(--hover-color);
+    font-size: 1rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: .6s;
+    box-shadow: var(--neon-box-shadow);
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    border: 2px solid var(--hover-color);
+    text-align: center;
+    cursor: pointer;
+    margin-top: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.notification-item .delete-notification:hover {
+    color: black;
+    background: var(--hover-color);
+}
+
+.notification-item .delete-notification::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--hover-color);
+    width: 0;
+    height: 100%;
+    z-index: -1;
+    transition: .4s;
+}
+
+.notification-item .delete-notification:hover::before {
+    width: 100%;
+}
+
+
 /* Styles for the Confirmation Modal */
 .confirmation-modal {
     position: fixed;
