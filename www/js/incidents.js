@@ -87,9 +87,7 @@ function displayIncident(incident) {
         });
 
         reportElement.querySelector('.delete-post').addEventListener('click', () => {
-            showConfirmationModal(() => {
-                deleteIncident(incident.id);
-            });
+            showConfirmationModal(incident.id);
         });
     }
 }
@@ -120,7 +118,7 @@ async function submitIncidentForm(event) {
     event.preventDefault();
     const user = auth.currentUser;
     if (!user) {
-        displayNotification('You need to be logged in to submit an incident.', '.popup-notification');
+        displayNotification('You need to be logged in to submit an incident.', 'error');
         return;
     }
     const title = document.getElementById('title').value;
@@ -176,11 +174,11 @@ async function submitIncidentForm(event) {
             document.getElementById('category').value = '';
             fileInput.value = '';
             updateSubmitButtonText('Submit'); // Change button text to 'Submit'
-            displayNotification('Incident submitted successfully', '.popup-notification');
+            displayNotification('Incident submitted successfully', 'success');
         })
         .catch(error => {
             console.error('Error submitting incident:', error);
-            displayNotification('Error submitting incident', '.popup-notification');
+            displayNotification('Error submitting incident', 'error');
         });
     }, (error) => {
         console.error('Geolocation error:', error);
@@ -244,16 +242,16 @@ function editIncident(incident) {
             submitButton.textContent = 'Submit';
             submitButton.removeEventListener('click', updateIncident);
             submitButton.addEventListener('click', submitIncidentForm);
-            displayNotification('Incident updated successfully', '.popup-notification');
+            displayNotification('Incident updated successfully', 'success');
         })
         .catch(error => {
             console.error('Error updating incident:', error);
-            displayNotification('Error updating incident', '.popup-notification');
+            displayNotification('Error updating incident', 'error');
         });
     });
 }
 
-// Function to delete an incident
+// Function to delete an incident with confirmation modal
 function deleteIncident(incidentId) {
     fetch(`${apiUrl}/latest`, {
         headers: {
@@ -276,32 +274,12 @@ function deleteIncident(incidentId) {
     .then(response => response.json())
     .then(() => {
         fetchAndDisplayIncidents();
-        displayNotification('Incident deleted successfully', '.popup-notification');
+        displayNotification('Incident deleted successfully', 'success');
     })
     .catch(error => {
         console.error('Error deleting incident:', error);
-        displayNotification('Error deleting incident', '.popup-notification');
+        displayNotification('Error deleting incident', 'error');
     });
-}
-
-// Function to show the confirmation modal
-function showConfirmationModal(onConfirm) {
-    const modal = document.getElementById('confirmation-modal');
-    const confirmButton = document.getElementById('confirm-delete');
-    const cancelButton = document.getElementById('cancel-delete');
-
-    modal.style.display = 'flex'; // Show the modal
-
-    // Confirm button action
-    confirmButton.onclick = () => {
-        modal.style.display = 'none'; // Hide the modal
-        onConfirm(); // Execute the confirm action
-    };
-
-    // Cancel button action
-    cancelButton.onclick = () => {
-        modal.style.display = 'none'; // Hide the modal
-    };
 }
 
 // Function to populate form fields with incident data
@@ -358,9 +336,27 @@ window.onload = () => {
         if (user) {
             fetchAndDisplayIncidents();
         } else {
-            displayNotification('You need to be logged in to view incidents.', '.popup-notification');
+            displayNotification('You need to be logged in to view incidents.', 'error');
         }
     });
     setupNavigation();
 };
+
+// Function to show confirmation modal
+function showConfirmationModal(incidentId) {
+    const modal = document.getElementById('confirmation-modal');
+    modal.style.display = 'block';
+
+    const confirmDeleteButton = document.getElementById('confirm-delete');
+    const cancelDeleteButton = document.getElementById('cancel-delete');
+
+    confirmDeleteButton.onclick = () => {
+        deleteIncident(incidentId);
+        modal.style.display = 'none';
+    };
+
+    cancelDeleteButton.onclick = () => {
+        modal.style.display = 'none';
+    };
+}
 
