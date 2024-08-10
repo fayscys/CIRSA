@@ -393,6 +393,8 @@ section.active {
     text-align: center;
     background: var(--second-bg-color);
     color: var(--text-color);
+    width: 50%;
+    height: auto;
 }
 
 .viewedreport h2 {

@@ -8,6 +8,8 @@ const apiKey = '$2a$10$Pjo.Uw6T477fr03n1GUrveeCl.0Q6Au6vcfp6gHXUfaJLTFcD9EOO';
 
 const storage = getStorage();
 const recentReports = document.getElementById('recent-reports');
+const allViewedContainer = document.getElementById('all-viewed');
+const recentlyViewedContainer = document.getElementById('recently-viewed');
 
 // Function to upload an image to Firebase Storage
 async function uploadImage(file) {
@@ -33,6 +35,8 @@ function fetchAndDisplayIncidents() {
     .then(response => response.json())
     .then(data => {
         recentReports.innerHTML = ''; // Clear previous posts
+        allViewedContainer.innerHTML = ''; // Clear all viewed container
+        recentlyViewedContainer.innerHTML = ''; // Clear recently viewed container
 
         if (data.record && data.record.record && data.record.record.posts && Array.isArray(data.record.record.posts)) {
             // Sort the incidents by timestamp in descending order
@@ -40,6 +44,7 @@ function fetchAndDisplayIncidents() {
 
             data.record.record.posts.forEach(incident => {
                 displayIncident(incident);
+                displayViewedReports(incident);
             });
         } else {
             console.error('Invalid data structure:', JSON.stringify(data, null, 2));
@@ -90,6 +95,35 @@ function displayIncident(incident) {
             showConfirmationModal(incident.id);
         });
     }
+}
+
+// Function to display incidents in the "Viewed Reports" section
+function displayViewedReports(incident) {
+    const reportElement = document.createElement('div');
+    reportElement.classList.add('report-item');
+    reportElement.innerHTML = `
+        <h3>${incident.title}</h3>
+        <p>${truncateDescription(incident.description)}</p>
+        <p><strong>Category:</strong> ${incident.category}</p>
+        <p><strong>Location:</strong> ${incident.location}</p>
+        ${incident.fileUrl ? `<img src="${incident.fileUrl}" alt="Incident Image" />` : ''}
+        <a href="#" class="view-details-link" data-incident='${JSON.stringify(incident)}'>View Details</a>
+    `;
+
+    // Append to All Viewed section
+    allViewedContainer.appendChild(reportElement);
+
+    // Append to Recently Viewed section (limit to 5 recent incidents)
+    if (recentlyViewedContainer.childElementCount < 5) {
+        recentlyViewedContainer.appendChild(reportElement.cloneNode(true));
+    }
+
+    // Add event listener for view details
+    reportElement.querySelector('.view-details-link').addEventListener('click', (event) => {
+        event.preventDefault();
+        const incidentData = JSON.parse(event.currentTarget.getAttribute('data-incident'));
+        displayIncidentDetails(incidentData);
+    });
 }
 
 // Function to display the full details of a single incident
