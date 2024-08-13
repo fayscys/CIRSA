@@ -25,7 +25,7 @@
                 <a href="#home" class="sidebar-menu-item" data-target="home">Home</a>
             </li>
             <li>
-                <a href="#viewedreports" class="sidebar-menu-item" data-target="viewedreport">Viewed Reports </a>
+                <a href="#viewedreports" class="sidebar-menu-item" data-target="viewedreport">Viewed Reports</a>
             </li>
             <li>
                 <a href="#categories" class="sidebar-menu-item cat-btn" data-target="categories">Categories
@@ -78,10 +78,10 @@
 
         <div id="recent-reports">
             <div class="report-item">
-                <h3></h3>
-                <p></p>
-                <p></p>
-                <p></p>
+                <h3>Report Title</h3>
+                <p>Short description...</p>
+                <p>Category: Incident Category</p>
+                <p>Location: Incident Location</p>
                 <img src="" alt="">
                 <div class="actions">
                     <a href="#" class="view-details-link" data-incident='{}'>View Details</a>
@@ -92,54 +92,58 @@
         </div>
     </section>
 
+    <!-- Container for Viewed Reports and Details -->
+    <div class="viewed-report-container">
+        <!-- Viewed Report Section -->
+        <section id="viewedreport" class="viewedreport">
+            <div id="all-viewed" class="viewed-content">
+                <h2>All Viewed Reports</h2>
+                <div class="report-item">
+                    <h3>Viewed Report Title 1</h3>
+                    <p>Short description...</p>
+                    <img src="" alt="">
+                    <a href="#">View Details</a>
+                </div>
+            </div>
+
+            <div id="recently-viewed" class="viewed-content">
+                <h2>Recently Viewed Reports</h2>
+                <div class="report-item">
+                    <h3>Viewed Report Title 2</h3>
+                    <p>Short description...</p>
+                    <img src="" alt="">
+                    <a href="#">View Details</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Incident Details Section -->
+        <section id="incident-details" class="incident-details">
+            <h3>Report Details</h3>
+            <p>Full description of the report...</p>
+            <p>Category: Detailed Category</p>
+            <p>Location: Detailed Location</p>
+            <img src="" alt="Incident Image">
+            <button id="back-to-list">Back to List</button>
+        </section>
+    </div>
     
-    <!--viewed report section-->
-    <section id="viewedreport" class="viewedreport">
-        <div id="all-viewed" class="viewed-content">
-            <h2>All Viewed Reports</h2>
-            <div class="report-item">
-                <h3></h3>
-                <p></p>
-                <p></p>
-                <p></p>
-                <img src="">
-                <a href="#">View Details</a>
-            </div>
-        </div>
-
-        <div id="recently-viewed" class="viewed-content">
-            <h2>Recently Viewed Reports</h2>
-            <!-- Recently viewed reports will be displayed here -->
-            <div class="report-item">
-                <h3></h3>
-                <p></p>
-                <p></p>
-                <p></p>
-                <img src="">
-                <a href="#">View Details</a>
-            </div>
-        </div>
-
-    </section>
-        
     <!-- Category Section -->
     <section id="category" class="category viewedreport">
         <div id="category-content" class="viewed-content">
             <h2 id="selected-category">Category</h2>
             <div id="category-reports">
-                <!-- Reports for the selected category will be displayed here -->
                 <div class="report-item">
-                    <h3></h3>
-                    <p></p>
-                    <p></p>
-                    <p></p>
-                    <img src="">
+                    <h3>Category Report Title</h3>
+                    <p>Short description...</p>
+                    <img src="" alt="">
                     <a href="#">View Details</a>
                 </div>
             </div>
         </div>
     </section>
-        <!--categories section-->
+
+    <!-- Categories Section -->
     <section id="categories" class="categories">
         <h2>Categories</h2>
         <div id="categories-list" class="categories-list">
@@ -162,7 +166,7 @@
     </section>
     
 
-    <!--incident form section-->
+    <!-- Incident Form Section -->
     <section id="incidentform" class="incidentform">
         <h2>Submit Incident Form</h2>
         <form>
@@ -201,32 +205,21 @@
         </form>
     </section>
 
-    <!-- Incident Details Section -->
-    <section id="incident-details" class="incident-details">
-        <!-- Incident details will be displayed here -->
-        <h3></h3>
-        <p></p>
-        <p></p>
-        <p></p>
-        <img src="">
-        <button id="back-to-list">Back to List</button>
-    </section>
-
-    <!--notification section-->
+    <!-- Notification Section -->
     <section id="notification" class="notification">
         <div id="all-notifications" class="notification-content">
             <h2>All Notifications</h2>
             <div class="notification-item">
-                <h3></h3>
-                <p></p>
+                <h3>Notification Title</h3>
+                <p>Notification content...</p>
                 <a href="#">View Details</a>
             </div>
         </div>
         <div id="recent-notifications" class="notification-content">
             <h2>Recent Notifications</h2>
             <div class="notification-item">
-                <h3></h3>
-                <p></p>
+                <h3>Recent Notification Title</h3>
+                <p>Notification content...</p>
                 <a href="#">View Details</a>
             </div>
         </div>
@@ -280,6 +273,7 @@
         </div>
     </section>
 
+    <!-- Scripts and Modals -->
     <script type="module" src="js/firebaseConfig.js"></script>
     <script type="module" src="js/index.js"></script>
     <script type="module" src="js/incidents.js"></script>
