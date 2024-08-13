@@ -442,9 +442,8 @@ section.active {
     padding: 30px;
     min-height: 600px;
     max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: -400px;
+    margin-top: -500px;
+    margin-left: 300px;
 }
 
 .incident-details h2 {
